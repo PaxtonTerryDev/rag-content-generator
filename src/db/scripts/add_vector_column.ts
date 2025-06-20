@@ -27,7 +27,7 @@ export async function addVectorColumn() {
     return;
   } catch (error) {
     console.error(
-      "migration-up script failed. It's likely this already exists"
+      "Adding Vector Column task failed. It's likely this already exists"
     );
     return;
   }

@@ -6,7 +6,7 @@ import {
   CollectionJob,
 } from "@/db/schema";
 import { db } from "@/db/connection";
-import { EmbeddingService } from "@/services/EmbeddingService";
+import { EmbeddingService } from "@/services/embedding-service";
 import { collectionJobs, content } from "@/db/schema";
 import { eq, and, sql } from "drizzle-orm";
 

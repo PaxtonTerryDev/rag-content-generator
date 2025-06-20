@@ -15,6 +15,7 @@
     "db:drop": "drizzle-kit drop"
   },
   "dependencies": {
+    "@types/node-cron": "^3.0.11",
     "axios": "^1.10.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
@@ -22,6 +23,7 @@
     "express": "^5.1.0",
     "helmet": "^8.1.0",
     "morgan": "^1.10.0",
+    "node-cron": "^4.1.1",
     "openai": "^5.5.1",
     "postgres": "^3.4.4"
   },
