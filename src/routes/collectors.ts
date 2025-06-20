@@ -1,8 +1,9 @@
+// src/routes/collectors.ts (updated to use job queue)
 import { Router } from "express";
 import { db } from "@/db/connection";
 import { collectionJobs } from "@/db/schema";
 import { desc, eq } from "drizzle-orm";
-import { StackOverflowCollector } from "@/collectors/stack-overflow-collector";
+import { jobQueue } from "@/services";
 
 const router: Router = Router();
 
@@ -47,32 +48,27 @@ router.get("/jobs/:id", async (req, res): Promise<any> => {
   }
 });
 
-// Start Stack Overflow collection
+// Start Stack Overflow collection (now using job queue)
 router.post("/stackoverflow/collect", async (req, res) => {
   try {
     const options = req.body;
-    console.log("Starting Stack Overflow collection with options:", options);
+    console.log("Queueing Stack Overflow collection with options:", options);
 
-    const collector = new StackOverflowCollector();
-
-    // Start collection in background
-    collector
-      .startCollection(options)
-      .then((job) => {
-        console.log("Stack Overflow collection completed:", job);
-      })
-      .catch((error) => {
-        console.error("Stack Overflow collection failed:", error);
-      });
+    // Add job to queue instead of running directly
+    const jobId = await jobQueue.addJob("stackoverflow-collection", options, {
+      priority: 1, // High priority for manual collections
+      maxAttempts: 2,
+    });
 
     res.json({
-      message: "Stack Overflow collection started",
+      message: "Stack Overflow collection queued",
+      jobId,
       provider: "stackoverflow",
       options,
     });
   } catch (error) {
-    console.error("Error starting Stack Overflow collection:", error);
-    res.status(500).json({ error: "Failed to start collection" });
+    console.error("Error queueing Stack Overflow collection:", error);
+    res.status(500).json({ error: "Failed to queue collection" });
   }
 });
 

@@ -7,6 +7,7 @@ import morgan from "morgan";
 import { collectorsRouter } from "@/routes/collectors";
 import { dashboardRouter } from "@/routes/dashboard";
 import { searchRouter } from "@/routes/search";
+import { jobsRouter } from "@/routes/jobs"; // New job routes
 
 const app: Express = express();
 
@@ -21,6 +22,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/collectors", collectorsRouter);
 app.use("/api/dashboard", dashboardRouter);
 app.use("/api/search", searchRouter);
+app.use("/api/jobs", jobsRouter); // New job routes
 
 // Health check
 app.get("/health", (req, res) => {
@@ -36,6 +38,7 @@ app.get("/", (req, res) => {
       collectors: "/api/collectors",
       dashboard: "/api/dashboard",
       search: "/api/search",
+      jobs: "/api/jobs", // New endpoint
       health: "/health",
     },
   });
@@ -57,8 +60,7 @@ app.use(
   }
 );
 
-// 404 handler
-app.use("*", (req, res) => {
+app.use("/*catchall", (req, res) => {
   res.status(404).json({
     error: "Not found",
     message: `Route ${req.originalUrl} not found`,

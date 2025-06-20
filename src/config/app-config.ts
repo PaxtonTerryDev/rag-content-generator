@@ -62,7 +62,7 @@ export const appConfig: AppConfig = {
     password: getEnv("DB_PASSWORD"),
     url: `postgresql://${getEnv("DB_USER")}:${getEnv("DB_PASSWORD")}@${getEnv(
       "DB_HOST"
-    )}:${getEnv("DB_PASSWORD")}/${getEnv("DB_NAME")}`,
+    )}:${getEnv("DB_PORT")}/${getEnv("DB_NAME")}`,
   },
   api: {
     openAI: {
