@@ -1,0 +1,41 @@
+{
+  "name": "rag-content-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "tsx --watch src/index.ts",
+    "docker:up": "docker compose -f ./docker/docker-compose.yaml up -d",
+    "docker:down": "docker compose -f ./docker/docker-compose.yaml down",
+    "docker:rebuild": "pnpm docker:down && pnpm docker:up",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate && tsx src/db/scripts/migration-up.ts",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:drop": "drizzle-kit drop"
+  },
+  "dependencies": {
+    "axios": "^1.10.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.30.10",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "morgan": "^1.10.0",
+    "openai": "^5.5.1",
+    "postgres": "^3.4.4"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^20.19.1",
+    "@types/pg": "^8.11.6",
+    "drizzle-kit": "^0.21.4",
+    "tsx": "^4.20.3",
+    "typescript": "^5.4.5"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
