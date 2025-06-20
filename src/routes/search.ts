@@ -2,7 +2,7 @@ import { Router, Request, Response, NextFunction } from "express";
 import { db } from "@/db/connection";
 import { content } from "@/db/schema";
 import { sql } from "drizzle-orm";
-import { EmbeddingService } from "@/services/EmbeddingService";
+import { EmbeddingService } from "@/services/embedding-service";
 
 const router: Router = Router();
 
